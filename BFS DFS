@@ -1,0 +1,105 @@
+
+/*
+Enter the total number of vertices:5
+Enter total number of edges5
+enter the edges (format v w)0 1
+0 2
+0 3
+2 4
+2 3
+DFS
+0 1 2 4 3 
+BFS
+0 1 2 3 4 
+*/
+
+import java.util.*;
+
+class Graphh{
+
+	private int V;
+	private ArrayList<ArrayList<Integer>>adj;
+
+	Graphh(int v)
+	{
+		V=v;
+		adj=new ArrayList<>();
+		for(int i=0;i<V;i++)
+		{
+			adj.add(new ArrayList<>());
+		}
+	}
+	void addEdge(int v,int w)
+	{
+		adj.get(v).add(w);
+		adj.get(w).add(v);
+	}
+	void dfs(int v,boolean[] visited)
+	{
+		visited[v]=true;
+		System.out.print(v+" ");
+		for(int n: adj.get(v))
+	{
+	if(!visited[n])
+	{
+		dfs(n,visited);
+	}
+	}
+
+	}
+	
+	void bfs(int v)
+	{
+	boolean []visited=new boolean[V];
+	Queue<Integer>queue=new LinkedList<>();
+	visited[v]=true;
+	queue.add(v);
+	
+	while(!queue.isEmpty())
+	{
+	int currentvertex=queue.poll();
+	System.out.print(currentvertex+"  ");
+	
+	for(int a:adj.get(currentvertex))
+	{
+	if(!visited[a])
+	{
+	visited[a]=true;
+	queue.add(a);
+	}
+	}
+	}
+	}
+	
+public static void main(String args[])	
+{
+Scanner sc=new Scanner(System.in);
+
+
+System.out.print("Enter the number of vertices :");
+int V=sc.nextInt();
+Graphh g=new Graphh(V);
+System.out.print("Enter the number of Edges:");
+int E=sc.nextInt();
+
+System.out.println("Enter the vertices in format (a b)");
+for(int i=0;i<=V;i++)
+{
+g.addEdge(sc.nextInt(),sc.nextInt());
+}
+System.out.println("DFS:");
+boolean visitedDFS[]=new boolean[V];
+for(int i=0;i<V;i++)
+{
+if(!visitedDFS[i])
+{
+g.dfs(i,visitedDFS);
+}
+}
+System.out.print("BFS:");
+g.bfs(0);
+sc.close();
+}
+
+}
+
